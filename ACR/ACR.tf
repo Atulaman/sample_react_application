@@ -6,6 +6,6 @@ resource "azurerm_container_registry" "myregistry" {
   admin_enabled       = true
   network_rule_set {
     default_action = "Allow"  # Set default action to allow traffic
-    ip_rule ="0.0.0.0/0" # Allow traffic from all IP addresses
+    //ip_rule ="0.0.0.0/0" # Allow traffic from all IP addresses
   }
 }
