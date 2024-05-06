@@ -41,4 +41,4 @@ jobs:
       run: |
         cd ACR
         ls -a
-        terraform apply -auto-approve
+        terraform apply -target=azurerm_container_registry.myregistry -auto-approve
