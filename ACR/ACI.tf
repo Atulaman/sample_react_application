@@ -7,7 +7,7 @@ resource "azurerm_container_group" "my_app" {
 
   container {
     name   = "my_app"
-    image  = "${azurerm_container_registry.myregistry.login_server}/react:latest"  # Replace with your image reference
+    image  = "${azurerm_container_registry.myregistry.login_server}/react"  # Replace with your image reference
     cpu    = "0.5"
     memory = "1.5"
 
