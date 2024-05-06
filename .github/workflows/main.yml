@@ -42,3 +42,18 @@ jobs:
         cd ACR
         ls -a
         terraform apply -target=azurerm_container_registry.myregistry -auto-approve
+
+    - name: build docker image and push it to ACR
+      run: |
+        ls -a
+        docker build -t react .
+        docker tag react mikku1999.azurecr.io/react
+        az acr login --name mikku1999
+        docker push mikku1999.azurecr.io/react
+    - name: Create ACI
+      run: |
+        cd ACR
+        ls -a
+        terraform apply -auto-approve
+
+        
