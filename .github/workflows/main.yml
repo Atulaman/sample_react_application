@@ -25,12 +25,4 @@ jobs:
         inlineScript: |
            az login --service-principal -u ${{ secrets.AZURE_SP_APP_ID }} -p ${{ secrets.AZURE_SP_PASSWORD }} --tenant ${{ secrets.AZURE_TENANT_ID }}
     - name: Change Directory
-      run: cd ${{ github.workspace }}/ACR && ls -a
-    - name: Terraform Init
-      run: terraform init
-
-    - name: Terraform Plan
-      run: terraform plan
-
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
+      run: cd ${{ github.workspace }}/ACR && ls -a && terraform init && terraform plan && terraform apply -auto-approve
