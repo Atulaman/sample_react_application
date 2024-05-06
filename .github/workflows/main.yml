@@ -14,11 +14,9 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Setup Terraform
-      run: |
-        wget -O- https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-        echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-        sudo apt update && sudo apt install terraform
-
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
 
     - name: Azure Login
       uses: azure/CLI@v1
@@ -26,4 +24,11 @@ jobs:
         azcliversion: 2.32.0
         inlineScript: |
            az login --service-principal -u ${{ secrets.AZURE_SP_APP_ID }} -p ${{ secrets.AZURE_SP_PASSWORD }} --tenant ${{ secrets.AZURE_TENANT_ID }}
-           cd ${{ github.workspace }}/ACR && ls -a && terraform init && terraform plan && terraform apply -auto-approve
+      
+    - name: Change Directory and Terraform operations
+      run: |
+        cd ACR
+        ls -a
+        terraform init
+        terraform plan
+        terraform apply -auto-approve
