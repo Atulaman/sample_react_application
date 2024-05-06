@@ -26,6 +26,8 @@ jobs:
            az login --service-principal -u ${{ secrets.AZURE_SP_APP_ID }} -p ${{ secrets.AZURE_SP_PASSWORD }} --tenant ${{ secrets.AZURE_TENANT_ID }}
     - name: Change Directory
       run: cd ACR
+    - name: Check all Files
+      run: ls -a
     - name: Terraform Init
       run: terraform init
 
