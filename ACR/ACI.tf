@@ -7,7 +7,7 @@ resource "azurerm_container_group" "my_app" {
 
   container {
     name   = "my-container"
-    image  = "${azurerm_container_registry.myregistry.login_server}/react"  # Replace with your image reference
+    image  = "mikku1999.azurecr.io/react"  # Replace with your image reference
     cpu    = "0.5"
     memory = "1.5"
 
