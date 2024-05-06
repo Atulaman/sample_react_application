@@ -19,10 +19,10 @@ jobs:
         terraform_version: 1.0.0
 
     - name: Azure Login
-       uses: azure/cli@v1
-       with:
-         azcliversion: 2.32.0
-         inlineScript: |
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.32.0
+        inlineScript: |
            az login --service-principal -u ${{ secrets.AZURE_SP_APP_ID }} -p ${{ secrets.AZURE_SP_PASSWORD }} --tenant ${{ secrets.AZURE_TENANT_ID }}
     - name: Change Directory
       run: cd ACR
