@@ -1,0 +1,59 @@
+name: Create ACR with Terraform
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.0.0
+
+    - name: Azure install
+      run: |
+        sudo apt-get update -y
+        sudo apt-get install -y azure-cli
+
+    - name: Azure Login
+      run: az login --service-principal -u ${{ secrets.AZURE_SP_APP_ID }} -p ${{ secrets.AZURE_SP_PASSWORD }} --tenant ${{ secrets.AZURE_TENANT_ID }}
+      
+    - name: Change Directory and Terraform operations
+      run: |
+        cd ACR
+        ls -a
+        terraform init
+    - name: Set Azure Credentials
+      run: |
+        export ARM_CLIENT_ID="${{ secrets.AZURE_SP_APP_ID }}"
+        export ARM_CLIENT_SECRET="${{ secrets.AZURE_SP_PASSWORD }}"
+        export ARM_SUBSCRIPTION_ID="${{ secrets.ARM_SUBSCRIPTION_ID }}"
+        export ARM_TENANT_ID="${{ secrets.AZURE_TENANT_ID }}"
+    - name: Terraform Apply
+      run: |
+        cd ACR
+        ls -a
+        terraform apply -target=azurerm_container_registry.myregistry -auto-approve
+
+    - name: build docker image and push it to ACR
+      run: |
+        ls -a
+        docker build -t react .
+        docker tag react mikku1999.azurecr.io/react
+        az acr login --name mikku1999
+        docker push mikku1999.azurecr.io/react
+    - name: Create ACI
+      run: |
+        cd ACR
+        ls -a
+        terraform apply -auto-approve
+
+        
