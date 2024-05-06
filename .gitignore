@@ -1,0 +1,3 @@
+/node_modules
+/ACR/.terraform
+/ACR/.terraform.lock.hcl
