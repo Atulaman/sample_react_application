@@ -30,5 +30,11 @@ jobs:
         cd ACR
         ls -a
         terraform init
-        terraform plan
-        terraform apply -auto-approve
+    - name: Set Azure Credentials
+      run: |
+        export ARM_CLIENT_ID="${{ secrets.AZURE_SP_APP_ID }}"
+        export ARM_CLIENT_SECRET="${{ secrets.AZURE_SP_PASSWORD }}"
+        export ARM_SUBSCRIPTION_ID="${{ secrets.ARM_SUBSCRIPTION_ID }}"
+        export ARM_TENANT_ID="${{ secrets.AZURE_TENANT_ID }}"
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
