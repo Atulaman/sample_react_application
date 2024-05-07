@@ -1,12 +1,4 @@
 # Create an Azure Container Instance
-/*variable "username" {
-  type = string
-  default = "mikku1999"
-}
-variable "password" {
-  type = string
-  default = "W5YY0hoSmlh4wy9fxSxKtJbsifLvjZFc+agESdEicF+ACRDbqEKw"
-}*/
 resource "azurerm_container_group" "example" {
   name                = "example-continst"
   location            = azurerm_resource_group.react.location
