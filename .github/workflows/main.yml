@@ -57,10 +57,10 @@ jobs:
         terraform apply -auto-approve
     - name: Commit and Push Changes
       run: |
-        git config --global user.email "atul.aman@remotestate.com"
-        git config --global user.name "Atul Aman"
-        git add .
-        git commit -m "commited by github runner"
-        git push
+        git config --global user.email "atul.aman@remotestate.com" | echo "email added"
+        git config --global user.name "Atulaman" | echo "name added"
+        git add . | echo "files are staged"
+        git commit -m "commited by github runner" | echo "chages commited"
+        git push | echo "changes pushed"
 
         
