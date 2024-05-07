@@ -29,7 +29,7 @@ resource "azurerm_container_group" "example" {
 }
 
 # Grant access for ACI to pull images from ACR
-data "azurerm_role_definition" "acr_pull_role" {
+/*data "azurerm_role_definition" "acr_pull_role" {
   name = "AcrPull"
 }
 
@@ -38,4 +38,4 @@ resource "azurerm_role_assignment" "acr_pull_assignment" {
   role_definition_id   = data.azurerm_role_definition.acr_pull_role.id
   principal_id         = azurerm_container_group.example.identity[0].principal_id
   skip_service_principal_aad_check = true
-}
+}*/
