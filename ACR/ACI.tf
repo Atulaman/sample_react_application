@@ -1,21 +1,54 @@
 # Create an Azure Container Instance
+variable "username" {
+  type = string
+  default = "mikku1999"
+}
+variable "password" {
+  type = string
+  default = "W5YY0hoSmlh4wy9fxSxKtJbsifLvjZFc+agESdEicF+ACRDbqEKw"
+}
+/*data "azurerm_container_registry" "myregistry" {
+  name                = azurerm_container_registry.myregistry.name
+  resource_group_name = azurerm_container_registry.myregistry.resource_group_name
+  admin_enabled = true
+}*/
 resource "azurerm_container_group" "example" {
   name                = "example-continst"
   location            = azurerm_resource_group.react.location
   resource_group_name = azurerm_resource_group.react.name
   ip_address_type     = "Public"
-  //dns_name_label      = "aci-label"
+  restart_policy = "OnFailure"
   os_type             = "Linux"
+  image_registry_credential {
+    username = var.username
+    password = var.password
+    server = azurerm_container_registry.myregistry.login_server
+  }
 
   container {
     name   = "react-app"
-    image  = "mikku1999.azurecr.io/react"
+    image  = "${azurerm_container_registry.myregistry.login_server}/react:latest"
     cpu    = "0.5"
     memory = "1.5"
-
     ports {
       port     = 8080
       protocol = "TCP"
     }
   }
+  identity {
+    type = "SystemAssigned"
+  }
+  depends_on = [azurerm_container_registry.myregistry]
+}
+
+# Grant access for ACI to pull images from ACR
+data "azurerm_role_definition" "acr_pull_role" {
+  name = "AcrPull"
+}
+
+resource "azurerm_role_assignment" "acr_pull_assignment" {
+  scope                = azurerm_container_registry.myregistry.id
+  role_definition_id   = data.azurerm_role_definition.acr_pull_role.id
+  principal_id         = azurerm_container_group.example.identity[0].principal_id
+  skip_service_principal_aad_check = true
 }
