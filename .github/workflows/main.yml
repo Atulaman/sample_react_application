@@ -55,8 +55,8 @@ jobs:
         cd ACR
         ls -a
         terraform apply -auto-approve
-    -name: restart ACI
-     run: |
+    - name: restart ACI
+      run: |
        az container restart --name example-continst --resource-group react
     - name: Commit and Push Changes
       run: |
