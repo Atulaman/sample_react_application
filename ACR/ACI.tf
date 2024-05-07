@@ -1,4 +1,4 @@
-# Create an Azure Container Instance
+# Create an Azure Container Instances
 resource "azurerm_container_group" "example" {
   name                = "example-continst"
   location            = azurerm_resource_group.react.location
