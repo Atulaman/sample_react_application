@@ -1,16 +1,11 @@
 # Create an Azure Container Instance
-variable "username" {
+/*variable "username" {
   type = string
   default = "mikku1999"
 }
 variable "password" {
   type = string
   default = "W5YY0hoSmlh4wy9fxSxKtJbsifLvjZFc+agESdEicF+ACRDbqEKw"
-}
-/*data "azurerm_container_registry" "myregistry" {
-  name                = azurerm_container_registry.myregistry.name
-  resource_group_name = azurerm_container_registry.myregistry.resource_group_name
-  admin_enabled = true
 }*/
 resource "azurerm_container_group" "example" {
   name                = "example-continst"
@@ -20,8 +15,8 @@ resource "azurerm_container_group" "example" {
   restart_policy = "OnFailure"
   os_type             = "Linux"
   image_registry_credential {
-    username = var.username
-    password = var.password
+    username = azurerm_container_registry.myregistry.admin_username
+    password = azurerm_container_registry.myregistry.admin_password
     server = azurerm_container_registry.myregistry.login_server
   }
 
