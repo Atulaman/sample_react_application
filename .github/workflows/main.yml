@@ -55,5 +55,12 @@ jobs:
         cd ACR
         ls -a
         terraform apply -auto-approve
+    - name: Commit and Push Changes
+      run: |
+        git config --global user.email "atul.aman@remotestate.com"
+        git config --global user.name "Atul Aman"
+        git add .
+        git commit -m "commited by github runner"
+        git push
 
         
