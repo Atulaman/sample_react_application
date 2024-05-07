@@ -64,6 +64,6 @@ jobs:
         git status
         git add . | echo "files are staged"
         git commit -m "commited by github runner" | echo "chages commited"
-        git push https://$GH_PAT@github.com:Atulaman/sample_react_application.git HEAD:master
+        git push https://$GH_PAT@github.com/Atulaman/sample_react_application.git HEAD:master
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
