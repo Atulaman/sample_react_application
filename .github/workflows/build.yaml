@@ -1,0 +1,36 @@
+name: Build Workflow
+
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        required: true
+        type: string
+      branch:
+        required: true
+        type: string
+      registry:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.branch }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+
+      - name: docker build
+        run: |
+          docker build -t hello-app:${{ github.sha }}  .
+
+      # - name: Run Build
+      #   run: npm run build
