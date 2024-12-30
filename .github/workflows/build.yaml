@@ -40,7 +40,7 @@ jobs:
 
       - name: Load Docker Image
         run: |
-          docker load -i my-app.tar
+          docker load -i hello-app.tar
 
       - name: Push Docker Image
         run: |
