@@ -24,8 +24,8 @@ jobs:
         with:
           name: docker-image
           path: |
-            my-app.tar
-            image-tag.txt
+            ./my-app.tar
+            ./image-tag.txt
 
   push:
     name: Push Docker Image to Artifact Registry
